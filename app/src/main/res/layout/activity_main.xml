@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="imageUploadViewModel"
+            type="org.bonhamsdemoapp.viewmodel.ImageUploadViewModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/groupStyleblue_A700"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/CustomProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:viewVisibility="@{imageUploadViewModel.isLoading}" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtLetstakeourb"
+            style="@style/txtPoppinsmedium18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_100pxh"
+            android:text="@string/msg_lets_take_our_b"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageImage"
+            android:layout_width="@dimen/_250pxh"
+            android:layout_height="@dimen/_200pxh"
+            android:scaleType="fitXY"
+            android:layout_marginTop="@dimen/_10pxh"
+            app:imageUri="@{imageUploadViewModel.imageUri}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtLetstakeourb"
+            app:viewVisibility="@{imageUploadViewModel.isImageVisible}"
+            tools:ignore="ContentDescription" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPreviewImageView"
+            style="@style/btnSolidRounded"
+            android:layout_width="@dimen/_100pxh"
+            android:layout_height="@dimen/_40pxh"
+            android:layout_marginTop="@dimen/_10pxh"
+            android:gravity="center"
+            android:text="@string/lbl_skip"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageImage"
+            app:viewVisibility="@{imageUploadViewModel.isPreviewVisible}"
+            tools:text="@string/lbl_skip" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnCameraIntent"
+            android:layout_width="@dimen/_41pxh"
+            android:layout_height="@dimen/_41pxh"
+            android:layout_marginTop="@dimen/_10pxh"
+            android:background="@drawable/img_camera"
+            android:backgroundTint="@color/white"
+            android:padding="@dimen/_8pxh"
+            android:scaleType="fitCenter"
+            android:src="@drawable/img_camera_17x17"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/imageFileName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnPreviewImageView"
+            tools:ignore="ContentDescription" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/imageFileName"
+            style="@style/txtPoppinsregular18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/_10pxh"
+            android:text="@{imageUploadViewModel.isTypeName}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnCameraIntent"
+            app:viewVisibility="@{imageUploadViewModel.isTypeVisible}" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUploadImage"
+            style="@style/btnSolidRounded"
+            android:layout_width="@dimen/_200pxh"
+            android:layout_height="@dimen/_40pxh"
+            android:layout_margin="@dimen/_10pxh"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:text="@string/lbl_next"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageFileName"
+            app:viewVisibility="@{imageUploadViewModel.isUploadVisible}"
+            tools:text="@string/lbl_next" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <string name="app_name">Upload</string>
+    <string name="no_internet_connection">No internet connection!</string>
+    <string name="msg_lets_take_our_b">Lets take photo.</string>
+    <string name="lbl_skip">Preview</string>
+    <string name="lbl_next">Upload</string>
+    <string name="lbl_camera">Camera</string>
+    <string name="msg_photo_video_l">Photos &amp; Gallery</string>
+</resources>
