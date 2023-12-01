@@ -1,0 +1,233 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > NetworkMonitor</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.bonhamsdemoapp.util</a>
+</div>
+
+<h1>Coverage Summary for Class: NetworkMonitor (org.bonhamsdemoapp.util)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NetworkMonitor</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NetworkMonitor$isConnected$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/13)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NetworkMonitor$isConnected$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NetworkMonitor$isConnected$1$callback$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/22)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.bonhamsdemoapp.util
+&nbsp;
+&nbsp;import android.net.ConnectivityManager
+&nbsp;import android.net.Network
+&nbsp;import android.net.NetworkCapabilities
+&nbsp;import android.net.NetworkRequest
+&nbsp;import kotlinx.coroutines.channels.awaitClose
+&nbsp;import kotlinx.coroutines.flow.Flow
+&nbsp;import kotlinx.coroutines.flow.callbackFlow
+&nbsp;import javax.inject.Inject
+&nbsp;
+&nbsp;/**
+&nbsp; * Network monitor
+&nbsp; *
+&nbsp; * @property connectivityManager
+&nbsp; * @constructor Create empty Network monitor
+&nbsp; */
+<b class="nc">&nbsp;class NetworkMonitor @Inject constructor(</b>
+<b class="nc">&nbsp;    private val connectivityManager: ConnectivityManager</b>
+&nbsp;) {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Is connected
+&nbsp;     */
+<b class="nc">&nbsp;    val isConnected: Flow&lt;Boolean&gt; = callbackFlow {</b>
+<b class="nc">&nbsp;        val callback = object : ConnectivityManager.NetworkCallback() {</b>
+&nbsp;            /**
+&nbsp;             * On available
+&nbsp;             *
+&nbsp;             * @param network
+&nbsp;             */
+&nbsp;            override fun onAvailable(network: Network) {
+<b class="nc">&nbsp;                super.onAvailable(network)</b>
+<b class="nc">&nbsp;                trySend(true)</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            /**
+&nbsp;             * On lost
+&nbsp;             *
+&nbsp;             * @param network
+&nbsp;             */
+&nbsp;            override fun onLost(network: Network) {
+<b class="nc">&nbsp;                trySend(false)</b>
+<b class="nc">&nbsp;                super.onLost(network)</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;        /**
+&nbsp;         * Request
+&nbsp;         */
+<b class="nc">&nbsp;        val request = NetworkRequest.Builder()</b>
+<b class="nc">&nbsp;            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)</b>
+<b class="nc">&nbsp;            .apply {</b>
+<b class="nc">&nbsp;                addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)</b>
+<b class="nc">&nbsp;            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)</b>
+<b class="nc">&nbsp;            .build()</b>
+<b class="nc">&nbsp;        trySend(ConnectedCompat.isConnected(connectivityManager))</b>
+<b class="nc">&nbsp;        connectivityManager.registerNetworkCallback(request, callback)</b>
+&nbsp;
+<b class="nc">&nbsp;        awaitClose {</b>
+<b class="nc">&nbsp;            connectivityManager.unregisterNetworkCallback(callback)</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-02 05:03</div>
+</div>
+</body>
+</html>

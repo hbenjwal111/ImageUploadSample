@@ -1,0 +1,90 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ImageService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.bonhamsdemoapp.api</a>
+</div>
+
+<h1>Coverage Summary for Class: ImageService (org.bonhamsdemoapp.api)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">ImageService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.bonhamsdemoapp.api
+&nbsp;
+&nbsp;import okhttp3.MultipartBody
+&nbsp;import org.bonhamsdemoapp.constant.Constants
+&nbsp;import org.bonhamsdemoapp.model.ImageUploadResponse
+&nbsp;import retrofit2.Response
+&nbsp;import retrofit2.http.Multipart
+&nbsp;import retrofit2.http.POST
+&nbsp;import retrofit2.http.Part
+&nbsp;
+&nbsp;interface ImageService {
+&nbsp;    /**
+&nbsp;     * Upload image
+&nbsp;     *
+&nbsp;     * @param profileImage
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    @Multipart
+&nbsp;    @POST(Constants.RANDOM_URL)
+&nbsp;    suspend fun uploadImage(
+&nbsp;        @Part profileImage: MultipartBody.Part
+&nbsp;    ): Response&lt;ImageUploadResponse&gt;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-02 05:03</div>
+</div>
+</body>
+</html>

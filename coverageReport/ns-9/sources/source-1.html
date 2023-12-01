@@ -1,0 +1,243 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AppModule</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.bonhamsdemoapp.di</a>
+</div>
+
+<h1>Coverage Summary for Class: AppModule (org.bonhamsdemoapp.di)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AppModule</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.bonhamsdemoapp.di
+&nbsp;
+&nbsp;import android.content.Context
+&nbsp;import android.net.ConnectivityManager
+&nbsp;import dagger.Module
+&nbsp;import dagger.Provides
+&nbsp;import dagger.hilt.InstallIn
+&nbsp;import dagger.hilt.android.qualifiers.ApplicationContext
+&nbsp;import dagger.hilt.components.SingletonComponent
+&nbsp;import okhttp3.OkHttpClient
+&nbsp;import org.bonhamsdemoapp.api.ImageService
+&nbsp;import org.bonhamsdemoapp.constant.Constants.Companion.BASE_URL
+&nbsp;import org.bonhamsdemoapp.permission.PermissionUtils
+&nbsp;import org.bonhamsdemoapp.repo.ImageRepository
+&nbsp;import org.bonhamsdemoapp.repo.ImageRepositoryImpl
+&nbsp;import org.bonhamsdemoapp.util.NetworkMonitor
+&nbsp;import org.bonhamsdemoapp.viewmodel.ImageUploadViewModel
+&nbsp;import retrofit2.Retrofit
+&nbsp;import retrofit2.converter.gson.GsonConverterFactory
+&nbsp;import java.util.concurrent.TimeUnit
+&nbsp;import javax.inject.Singleton
+&nbsp;
+&nbsp;
+&nbsp;@Module
+&nbsp;@InstallIn(SingletonComponent::class)
+&nbsp;object AppModule {
+&nbsp;    /**
+&nbsp;     * Provide image upload view model
+&nbsp;     *
+&nbsp;     * @param repository
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    @Provides
+&nbsp;    @Singleton
+&nbsp;    fun provideImageUploadViewModel(repository: ImageRepository): ImageUploadViewModel {
+<b class="nc">&nbsp;        return ImageUploadViewModel(repository)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Provide image repository
+&nbsp;     *
+&nbsp;     * @param imageService
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    @Provides
+&nbsp;    @Singleton
+&nbsp;    fun provideImageRepository(imageService: ImageService): ImageRepository {
+<b class="nc">&nbsp;        return ImageRepositoryImpl(imageService)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Provide http client
+&nbsp;     *
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    @Provides
+&nbsp;    @Singleton
+&nbsp;    fun provideHttpClient(): OkHttpClient {
+&nbsp;        return OkHttpClient
+<b class="nc">&nbsp;            .Builder()</b>
+<b class="nc">&nbsp;            .readTimeout(60, TimeUnit.SECONDS)</b>
+<b class="nc">&nbsp;            .connectTimeout(60, TimeUnit.SECONDS)</b>
+<b class="nc">&nbsp;            .build()</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Provide converter factory
+&nbsp;     *
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    @Provides
+&nbsp;    @Singleton
+&nbsp;    fun provideConverterFactory(): GsonConverterFactory =
+<b class="nc">&nbsp;        GsonConverterFactory.create()</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Provide retrofit
+&nbsp;     *
+&nbsp;     * @param okHttpClient
+&nbsp;     * @param gsonConverterFactory
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    @Provides
+&nbsp;    @Singleton
+&nbsp;    fun provideRetrofit(
+&nbsp;        okHttpClient: OkHttpClient,
+&nbsp;        gsonConverterFactory: GsonConverterFactory
+&nbsp;    ): Retrofit {
+<b class="nc">&nbsp;        return Retrofit.Builder()</b>
+<b class="nc">&nbsp;            .baseUrl(BASE_URL)</b>
+<b class="nc">&nbsp;            .client(okHttpClient)</b>
+<b class="nc">&nbsp;            .addConverterFactory(gsonConverterFactory)</b>
+<b class="nc">&nbsp;            .build()</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Provide image upload service
+&nbsp;     *
+&nbsp;     * @param retrofit
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    @Provides
+&nbsp;    @Singleton
+&nbsp;    fun provideImageUploadService(retrofit: Retrofit): ImageService =
+<b class="nc">&nbsp;        retrofit.create(ImageService::class.java)</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Provide permission utils
+&nbsp;     *
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    @Provides
+&nbsp;    @Singleton
+&nbsp;    fun providePermissionUtils(): PermissionUtils {
+<b class="nc">&nbsp;        return PermissionUtils</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Provide connectivity manager
+&nbsp;     *
+&nbsp;     * @param context
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    @Provides
+&nbsp;    fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager =
+<b class="nc">&nbsp;        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Provide network monitor
+&nbsp;     *
+&nbsp;     * @param connectivityManager
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    @Provides
+&nbsp;    fun provideNetworkMonitor(connectivityManager: ConnectivityManager): NetworkMonitor {
+<b class="nc">&nbsp;        return NetworkMonitor(connectivityManager)</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-02 05:03</div>
+</div>
+</body>
+</html>

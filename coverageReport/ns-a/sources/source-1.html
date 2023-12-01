@@ -1,0 +1,219 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > PickerHandler</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.bonhamsdemoapp.extensions</a>
+</div>
+
+<h1>Coverage Summary for Class: PickerHandler (org.bonhamsdemoapp.extensions)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PickerHandler</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/33)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.bonhamsdemoapp.extensions
+&nbsp;
+&nbsp;import android.content.Context
+&nbsp;import android.content.Intent
+&nbsp;import android.net.Uri
+&nbsp;import android.os.Environment
+&nbsp;import android.provider.MediaStore
+&nbsp;import androidx.core.content.FileProvider
+&nbsp;import okhttp3.MediaType.Companion.toMediaTypeOrNull
+&nbsp;import okhttp3.MultipartBody
+&nbsp;import okhttp3.RequestBody.Companion.asRequestBody
+&nbsp;import java.io.File
+&nbsp;import java.io.IOException
+&nbsp;
+&nbsp;object PickerHandler {
+&nbsp;
+&nbsp;    private const val MIME_TYPE_IMAGE: String = &quot;image/*&quot;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Get image from gallery intent
+&nbsp;     *
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    fun getImageFromGalleryIntent(): Intent {
+<b class="nc">&nbsp;        val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)</b>
+<b class="nc">&nbsp;        galleryIntent.type = MIME_TYPE_IMAGE</b>
+<b class="nc">&nbsp;        return galleryIntent</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Take picture from camera intent
+&nbsp;     *
+&nbsp;     * @param context
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    fun takePictureFromCameraIntent(context: Context): Pair&lt;Intent, File?&gt; {
+&nbsp;        val imageFile: File?
+<b class="nc">&nbsp;        var imageUri: Uri?</b>
+&nbsp;
+<b class="nc">&nbsp;        try {</b>
+<b class="nc">&nbsp;            val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)</b>
+<b class="nc">&nbsp;            imageFile =</b>
+<b class="nc">&nbsp;                File.createTempFile(&quot;${System.currentTimeMillis()}_&quot;, &quot;.jpg&quot;, storageDir)</b>
+&nbsp;
+<b class="nc">&nbsp;            imageFile?.let { file -&gt;</b>
+<b class="nc">&nbsp;                imageUri = FileProvider.getUriForFile(</b>
+<b class="nc">&nbsp;                    context,</b>
+<b class="nc">&nbsp;                    &quot;org.bonhamsdemoapp.fileprovider&quot;,</b>
+<b class="nc">&nbsp;                    file</b>
+&nbsp;                )
+&nbsp;
+<b class="nc">&nbsp;                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)</b>
+<b class="nc">&nbsp;                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)</b>
+&nbsp;
+<b class="nc">&nbsp;                return Pair(cameraIntent, imageFile)</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (e: IOException) {</b>
+<b class="nc">&nbsp;            e.printStackTrace()</b>
+&nbsp;            // Handle file creation error
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return Pair(Intent(), null)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Resolve file path from uri
+&nbsp;     *
+&nbsp;     * @param uri
+&nbsp;     * @param context
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    fun resolveFilePathFromUri(uri: Uri, context: Context): String {
+<b class="nc">&nbsp;        val projection = arrayOf(MediaStore.Images.Media.DATA)</b>
+<b class="nc">&nbsp;        val cursor = context.contentResolver.query(uri, projection, null, null, null)</b>
+<b class="nc">&nbsp;        cursor?.use {</b>
+<b class="nc">&nbsp;            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)</b>
+<b class="nc">&nbsp;            it.moveToFirst()</b>
+<b class="nc">&nbsp;            return it.getString(columnIndex)</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return &quot;&quot;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Create profile image
+&nbsp;     *
+&nbsp;     * @param imageUri
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    fun createProfileImage(imageUri: String?): MultipartBody.Part {
+<b class="nc">&nbsp;        val imageFile = File(imageUri ?: &quot;&quot;)</b>
+<b class="nc">&nbsp;        val requestFile = imageFile.asRequestBody(&quot;multipart/form-data&quot;.toMediaTypeOrNull())</b>
+<b class="nc">&nbsp;        return MultipartBody.Part.createFormData(&quot;image&quot;, imageFile.name, requestFile)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Get image name from path
+&nbsp;     *
+&nbsp;     * @param filePath
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    fun getImageNameFromPath(filePath: String): String {
+<b class="nc">&nbsp;        val file = File(filePath)</b>
+<b class="nc">&nbsp;        return file.name // This retrieves the file name</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Get image uri
+&nbsp;     *
+&nbsp;     * @param filePath
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    fun getImageUri(filePath: String): Uri? {
+<b class="nc">&nbsp;        val file = File(filePath)</b>
+<b class="nc">&nbsp;        return Uri.fromFile(file)</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-02 05:03</div>
+</div>
+</body>
+</html>

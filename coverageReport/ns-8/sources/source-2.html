@@ -1,0 +1,198 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > BottomsheetSdCardAccessBindingImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.bonhamsdemoapp.databinding</a>
+</div>
+
+<h1>Coverage Summary for Class: BottomsheetSdCardAccessBindingImpl (org.bonhamsdemoapp.databinding)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BottomsheetSdCardAccessBindingImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/31)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.bonhamsdemoapp.databinding;
+&nbsp;import org.bonhamsdemoapp.R;
+&nbsp;import org.bonhamsdemoapp.BR;
+&nbsp;import androidx.annotation.NonNull;
+&nbsp;import androidx.annotation.Nullable;
+&nbsp;import android.view.View;
+&nbsp;@SuppressWarnings(&quot;unchecked&quot;)
+&nbsp;public class BottomsheetSdCardAccessBindingImpl extends BottomsheetSdCardAccessBinding  {
+&nbsp;
+&nbsp;    @Nullable
+&nbsp;    private static final androidx.databinding.ViewDataBinding.IncludedLayouts sIncludes;
+&nbsp;    @Nullable
+&nbsp;    private static final android.util.SparseIntArray sViewsWithIds;
+&nbsp;    static {
+<b class="nc">&nbsp;        sIncludes = null;</b>
+<b class="nc">&nbsp;        sViewsWithIds = new android.util.SparseIntArray();</b>
+<b class="nc">&nbsp;        sViewsWithIds.put(R.id.bottomOptionOne, 1);</b>
+<b class="nc">&nbsp;        sViewsWithIds.put(R.id.viewLine, 2);</b>
+<b class="nc">&nbsp;        sViewsWithIds.put(R.id.bottomOptionTwo, 3);</b>
+<b class="nc">&nbsp;        sViewsWithIds.put(R.id.dividerTwo, 4);</b>
+&nbsp;    }
+&nbsp;    // views
+&nbsp;    @NonNull
+&nbsp;    private final androidx.constraintlayout.widget.ConstraintLayout mboundView0;
+&nbsp;    // variables
+&nbsp;    // values
+&nbsp;    // listeners
+&nbsp;    // Inverse Binding Event Handlers
+&nbsp;
+&nbsp;    public BottomsheetSdCardAccessBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
+<b class="nc">&nbsp;        this(bindingComponent, root, mapBindings(bindingComponent, root, 5, sIncludes, sViewsWithIds));</b>
+&nbsp;    }
+&nbsp;    private BottomsheetSdCardAccessBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
+<b class="nc">&nbsp;        super(bindingComponent, root, 0</b>
+&nbsp;            , (android.widget.TextView) bindings[1]
+&nbsp;            , (android.widget.TextView) bindings[3]
+&nbsp;            , (android.view.View) bindings[4]
+&nbsp;            , (android.view.View) bindings[2]
+&nbsp;            );
+<b class="nc">&nbsp;        this.mboundView0 = (androidx.constraintlayout.widget.ConstraintLayout) bindings[0];</b>
+<b class="nc">&nbsp;        this.mboundView0.setTag(null);</b>
+<b class="nc">&nbsp;        setRootTag(root);</b>
+&nbsp;        // listeners
+<b class="nc">&nbsp;        invalidateAll();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void invalidateAll() {
+<b class="nc">&nbsp;        synchronized(this) {</b>
+<b class="nc">&nbsp;                mDirtyFlags = 0x1L;</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        requestRebind();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean hasPendingBindings() {
+<b class="nc">&nbsp;        synchronized(this) {</b>
+<b class="nc">&nbsp;            if (mDirtyFlags != 0) {</b>
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean setVariable(int variableId, @Nullable Object variable)  {
+<b class="nc">&nbsp;        boolean variableSet = true;</b>
+<b class="nc">&nbsp;            return variableSet;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected boolean onFieldChange(int localFieldId, Object object, int fieldId) {
+<b class="nc">&nbsp;        switch (localFieldId) {</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void executeBindings() {
+<b class="nc">&nbsp;        long dirtyFlags = 0;</b>
+<b class="nc">&nbsp;        synchronized(this) {</b>
+<b class="nc">&nbsp;            dirtyFlags = mDirtyFlags;</b>
+<b class="nc">&nbsp;            mDirtyFlags = 0;</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;        // batch finished
+&nbsp;    }
+&nbsp;    // Listener Stub Implementations
+&nbsp;    // callback impls
+&nbsp;    // dirty flag
+<b class="nc">&nbsp;    private  long mDirtyFlags = 0xffffffffffffffffL;</b>
+&nbsp;    /* flag mapping
+&nbsp;        flag 0 (0x1L): null
+&nbsp;    flag mapping end*/
+&nbsp;    //end
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-02 05:03</div>
+</div>
+</body>
+</html>
